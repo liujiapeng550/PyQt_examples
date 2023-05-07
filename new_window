@@ -1,0 +1,33 @@
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QPushButton, QVBoxLayout, QLabel
+from PyQt5.QtCore import Qt, QPoint, QRect
+
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.count = 0  # 计数器初始值为0
+
+        # 创建一个按钮并将其添加到主窗口
+        button = QPushButton('打开新窗口', self)
+        button.clicked.connect(self.open_new_window)
+
+    def open_new_window(self):
+        self.count += 1  # 计数器加1
+        new_window = QWidget()
+        layout = QVBoxLayout()
+        new_window.setLayout(layout)
+
+        # 创建一个标签，显示计数器的值
+        label = QLabel(f'这是第{self.count}个窗口', new_window)
+        label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(label)
+
+        new_window.show()
+        QApplication.instance().exec_()  # 进入事件循环，保持窗口不消失
+
+
+if __name__ == '__main__':
+    app = QApplication([])
+    main_win = MainWindow()
+    main_win.show()
+    QApplication.instance().exec_()
